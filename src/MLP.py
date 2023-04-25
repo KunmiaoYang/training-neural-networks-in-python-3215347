@@ -55,8 +55,10 @@ class MultiLayerPerceptron:
 
     def set_weights(self, w_init):
         # Write all the weights into the neural network.
-        # w_init is a list of floats. Organize it as you'd like. 
-        pass       
+        # w_init is a list of list of list of floats. Organize it as you'd like. 
+        for i in range(1, len(self.network)):
+            for j in range(len(self.network[i])):
+                self.network[i][j].set_weights(w_init[i - 1][j])
 
     def print_weights(self):
         print()
@@ -68,5 +70,26 @@ class MultiLayerPerceptron:
     def run(self, x):
         # Run an input forward through the neural network.
         # x is a python list with the input values.
+        self.values[0] = np.array(x)
+        for i in range(1, len(self.values)):
+            for j in range(len(self.values[i])):
+                self.values[i][j] = self.network[i][j].run(self.values[i - 1])
         return self.values[-1]
-        
+
+
+# test code
+# neuron = Perceptron(inputs=2)
+# neuron.set_weights([-10, -10, 15])  # NAND
+# neuron = Perceptron(inputs=2)
+# neuron.set_weights([10, 10, -5])  # OR
+# neuron = Perceptron(inputs=2)
+# neuron.set_weights([10, 10, -15])  # AND
+neuron = MultiLayerPerceptron(layers=[2,2,1])
+neuron.set_weights([[[-10, -10, 15], [10, 10, -5]], [[10, 10, -15]]])  # XOR
+neuron.print_weights()
+
+print("Gate:")
+print("0 0 = {0:.10f}".format(neuron.run([0, 0])[0]))
+print("0 1 = {0:.10f}".format(neuron.run([0, 1])[0]))
+print("1 0 = {0:.10f}".format(neuron.run([1, 0])[0]))
+print("1 1 = {0:.10f}".format(neuron.run([1, 1])[0]))
