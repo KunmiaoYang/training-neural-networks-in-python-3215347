@@ -106,10 +106,10 @@ class MultiLayerPerceptron:
         for i in reversed(range(1,len(self.network)-1)):
             o = self.values[i]
             for h in range(len(self.network[i])):
-                neuron = self.network[i][h]
                 fwd_error = 0.0
-                for k in range(self.layers[i+1]): 
-                    fwd_error += neuron.weights[k] * self.d[i + 1][k] # fill in the blank
+                for k in range(self.layers[i+1]):
+                    neuron = self.network[i + 1][k]
+                    fwd_error += neuron.weights[h] * self.d[i + 1][k] # fill in the blank
                 self.d[i][h] = o[h] * (1 - o[h]) * fwd_error # fill in the blank
 
         # STEPS 5 & 6: Calculate the deltas and update the weights
