@@ -6,7 +6,7 @@
   "editor.fontSize": 16,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "relative",
   "editor.matchBrackets": "always",
   "editor.minimap.enabled": false,
   "editor.smoothScrolling": true,
